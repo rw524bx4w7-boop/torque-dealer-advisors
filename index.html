@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Torque Dealer Advisors</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0a0f1e;
+    --navy-mid: #111827;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --white: #f5f3ef;
+    --gray: #8a8f9e;
+    --rule: rgba(201,168,76,0.25);
+  }
+
+  @media print {
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .page { page-break-after: avoid; }
+  }
+
+  html, body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--navy);
+    padding: 52px 60px 40px;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+  }
+
+  .logo-block {}
+
+  .logo-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+
+  .logo-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    color: var(--white);
+  }
+
+  .logo-name span {
+    color: var(--gold);
+  }
+
+  .header-right {
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .tagline {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--gold-light);
+    line-height: 1.4;
+    max-width: 220px;
+  }
+
+  /* ── HERO BAND ── */
+  .hero {
+    background: var(--gold);
+    padding: 22px 60px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .hero-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.08em;
+    color: var(--navy);
+    line-height: 1.2;
+  }
+
+  .hero-sub {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--navy);
+    opacity: 0.75;
+    letter-spacing: 0.05em;
+    margin-top: 3px;
+  }
+
+  .hero-divider {
+    width: 1px;
+    height: 40px;
+    background: rgba(10,15,30,0.25);
+    flex-shrink: 0;
+  }
+
+  /* ── BODY ── */
+  .body {
+    padding: 48px 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px 52px;
+    background: var(--navy);
+  }
+
+  /* ── INTRO ── */
+  .intro {
+    grid-column: 1 / -1;
+    max-width: 680px;
+  }
+
+  .intro p {
+    font-size: 15.5px;
+    line-height: 1.75;
+    color: rgba(245,243,239,0.88);
+    background: transparent;
+  }
+
+  .intro {
+    background: transparent;
+  }
+
+  .intro p strong {
+    color: var(--white);
+    font-weight: 500;
+  }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    font-size: 9.5px;
+    font-weight: 500;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  /* ── SERVICES ── */
+  .services {
+    grid-column: 1 / -1;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  /* ── COLLAPSIBLE TILES ── */
+  .service-item {
+    background: var(--navy-mid);
+    padding: 20px 22px;
+    border-left: 2px solid transparent;
+    transition: border-color 0.2s;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .service-item:hover {
+    border-left-color: var(--gold);
+  }
+
+  .service-item.open {
+    border-left-color: var(--gold);
+  }
+
+  .tile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .tile-toggle {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    color: var(--gold);
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 2px;
+    transition: transform 0.25s;
+  }
+
+  .service-item.open .tile-toggle {
+    transform: rotate(45deg);
+  }
+
+  .service-desc {
+    font-size: 11px;
+    color: var(--gray);
+    line-height: 1.5;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.35s ease, opacity 0.25s ease, margin-top 0.25s ease;
+    margin-top: 0;
+  }
+
+  .service-item.open .service-desc {
+    max-height: 200px;
+    opacity: 1;
+    margin-top: 8px;
+  }
+
+  /* Fixed Ops tile overrides */
+  .service-item.fixed-ops {
+    cursor: pointer;
+  }
+
+  .service-item.fixed-ops .service-desc {
+    display: block;
+    max-height: 0;
+    opacity: 0;
+  }
+
+  .service-item.fixed-ops.open .service-desc {
+    max-height: 300px;
+    opacity: 1;
+    margin-top: 10px;
+  }
+
+  .service-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--rule);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .service-title {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--white);
+    margin-bottom: 5px;
+    line-height: 1.3;
+  }
+
+  .service-desc {
+    font-size: 11px;
+    color: var(--gray);
+    line-height: 1.5;
+  }
+
+  /* ── MODEL ── */
+  .model-block {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, #111827 0%, #0d1424 100%);
+    border: 1px solid var(--rule);
+    padding: 36px 40px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    align-items: center;
+  }
+
+  .model-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .model-copy {
+    font-size: 14px;
+    color: rgba(245,243,239,0.8);
+    line-height: 1.7;
+    max-width: 480px;
+  }
+
+  .model-copy strong {
+    color: var(--white);
+    font-weight: 500;
+  }
+
+  .model-stat {
+    text-align: center;
+    flex-shrink: 0;
+    background: var(--gold);
+    padding: 24px 32px;
+  }
+
+  .model-stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    line-height: 1;
+    color: var(--navy);
+  }
+
+  .model-stat-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--navy);
+    opacity: 0.7;
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  /* ── WHY ── */
+  .why-col {}
+
+  .why-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .why-list li {
+    display: flex;
+    gap: 12px;
+    font-size: 13px;
+    color: rgba(245,243,239,0.8);
+    line-height: 1.5;
+    align-items: flex-start;
+  }
+
+  .why-list li::before {
+    content: '▸';
+    color: var(--gold);
+    font-size: 10px;
+    margin-top: 3px;
+    flex-shrink: 0;
+  }
+
+  /* ── WHO ── */
+  .who-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .who-list li {
+    font-size: 13px;
+    color: rgba(245,243,239,0.8);
+    padding: 10px 14px;
+    background: var(--navy-mid);
+    border-left: 2px solid var(--gold);
+    line-height: 1.4;
+  }
+
+  .who-list li strong {
+    color: var(--white);
+    font-weight: 500;
+    display: block;
+    font-size: 12px;
+    margin-bottom: 1px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: 28px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .footer-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+  }
+
+  .footer-contact {
+    font-size: 12px;
+    color: var(--gray);
+    text-align: right;
+    line-height: 1.7;
+  }
+
+  .footer-contact a {
+    color: var(--gold-light);
+    text-decoration: none;
+  }
+
+  .footer-cta {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: rgba(245,243,239,0.5);
+  }
+
+  /* ── ACCENT LINE ── */
+  .accent-bar {
+    height: 4px;
+    background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 50%, transparent 100%);
+  }
+
+  @media (max-width: 680px) {
+    header { padding: 36px 28px 28px; flex-direction: column; align-items: flex-start; }
+    .header-right { text-align: left; }
+    .hero { padding: 18px 28px; flex-direction: column; align-items: flex-start; }
+    .body { padding: 32px 28px; grid-template-columns: 1fr; gap: 36px; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    .model-block { grid-template-columns: 1fr; }
+    .model-stat { width: fit-content; }
+    footer { padding: 24px 28px; flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="accent-bar"></div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo-block">
+      <div class="logo-eyebrow">Automotive Consulting</div>
+      <div class="logo-name">Torque Dealer<span>.</span><br>Advisors</div>
+    </div>
+    <div class="header-right">
+      <div class="tagline">Total dealership performance — from the ground up.</div>
+    </div>
+  </header>
+
+  <!-- HERO BAND -->
+  <div class="hero">
+    <div>
+      <div class="hero-text">Total Dealer Solutions</div>
+      <div class="hero-sub">Independent · Franchise / OEM · BHPH / Subprime</div>
+    </div>
+    <div class="hero-divider"></div>
+    <div>
+      <div class="hero-text">Performance-Based Partnership</div>
+      <div class="hero-sub">You pay from growth. Zero risk to engage.</div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- INTRO -->
+    <div class="intro">
+      <p>
+        Most consultants hand you a report and leave. <strong>Torque Dealer Advisors embeds alongside your team</strong> — optimizing operations, training your people, integrating your technology, and installing AI-driven workflows that run your dealership on autopilot. From OEM compliance and F&I performance to LHPH program structure, we cover every profit center under one roof. And we only win when you win.
+      </p>
+    </div>
+
+    <!-- SERVICES -->
+    <div class="services">
+      <div class="section-label">What We Do</div>
+      <div class="services-grid">
+
+        <div class="service-item">
+          <div class="tile-header">
+            <div><div class="service-num">01</div><div class="service-title">Process &amp; Workflow Optimization</div></div>
+            <div class="tile-toggle">+</div>
+          </div>
+          <div class="service-desc">End-to-end operational audit and redesign — from lot to delivery to funding.</div>
+        </div>
+
+        <div class="service-item">
+          <div class="tile-header">
+            <div><div class="service-num">02</div><div class="service-title">Cost Analysis &amp; Reduction</div></div>
+            <div class="tile-toggle">+</div>
+          </div>
+          <div class="service-desc">Payment processing, vendor contracts, and overhead — we find the bleed and stop it.</div>
+        </div>
+
+        <div class="service-item">
+          <div class="tile-header">
+            <div><div class="service-num">03</div><div class="service-title">F&amp;I Performance &amp; Training</div></div>
+            <div class="tile-toggle">+</div>
+          </div>
+          <div class="service-desc">PVR optimization, product mix, menu selling, and compliance — built for your market.</div>
+        </div>
+
+        <div class="service-item">
+          <div class="tile-header">
+            <div><div class="service-num">04</div><div class="service-title">DMS System Training</div></div>
+            <div class="tile-toggle">+</div>
+          </div>
+          <div class="service-desc">CDK, Reynolds &amp; Reynolds, DealerTrack, Tekion, Automate, Frazer, Autosoft, and more — train your team to actually use what you're paying for.</div>
+        </div>
+
+        <div class="service-item">
+          <div class="tile-header">
+            <div><div class="service-num">05</div><div class="service-title">SaaS Integration</div></div>
+            <div class="tile-toggle">+</div>
+          </div>
+          <div class="service-desc">Get your CRM, DMS, inventory, and lender portals talking to each other — zero manual handoffs.</div>
+        </div>
+
+        <div class="service-item">
+          <div class="tile-header">
+            <div><div class="service-num">06</div><div class="service-title">Agentic AI / Autopilot</div></div>
+            <div class="tile-toggle">+</div>
+          </div>
+          <div class="service-desc">Install AI-driven workflows that handle follow-up, reporting, and task management automatically.</div>
+        </div>
+
+        <div class="service-item">
+          <div class="tile-header">
+            <div><div class="service-num">07</div><div class="service-title">Compliance</div></div>
+            <div class="tile-toggle">+</div>
+          </div>
+          <div class="service-desc">FTC Safeguards, OFAC, Red Flags, TILA/BHPH — stay audit-ready without the legal bills.</div>
+        </div>
+
+        <div class="service-item">
+          <div class="tile-header">
+            <div><div class="service-num">08</div><div class="service-title">Leadership Training</div></div>
+            <div class="tile-toggle">+</div>
+          </div>
+          <div class="service-desc">Sales managers, GSMs, and dealer principals — sharpen the people running your business.</div>
+        </div>
+
+        <div class="service-item">
+          <div class="tile-header">
+            <div><div class="service-num">09</div><div class="service-title">LHPH Program Structure &amp; Loss Mitigation</div></div>
+            <div class="tile-toggle">+</div>
+          </div>
+          <div class="service-desc">Build or optimize a Lease-Here Pay-Here program — underwriting, collections, and reinsurance strategy.</div>
+        </div>
+
+        <div class="service-item fixed-ops" style="grid-column: 1 / -1; border-left: 2px solid var(--gold);">
+          <div class="tile-header">
+            <div style="display: flex; align-items: flex-start; gap: 20px;">
+              <div class="service-num" style="font-size: 40px; line-height: 1; flex-shrink: 0;">10</div>
+              <div class="service-title" style="font-size: 13px; margin-top: 6px;">Fixed Operations Growth</div>
+            </div>
+            <div class="tile-toggle">+</div>
+          </div>
+          <div class="service-desc" style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px 24px;">
+            <span>▸ Grow CP labor revenue year over year — benchmarked to your market</span>
+            <span>▸ Capture every manufacturer incentive and program dollar you're leaving on the table</span>
+            <span>▸ Full financial statement review to identify margin leaks and untapped profit</span>
+            <span>▸ Restructure internal ROs to drive fixed absorption — and make service a profit center for the whole store</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ENGAGEMENT MODEL -->
+    <div class="model-block">
+      <div>
+        <div class="model-headline">Our Engagement Model</div>
+        <p class="model-copy">
+          No retainers. No flat fees. Torque Dealer Advisors operates on a <strong>pure revenue-share model</strong> — we earn <strong>1% of your year-over-year gross increase</strong>, paid monthly. If we don't move your numbers, you don't pay. That's not a guarantee — it's how we're built. Skin in the game, every engagement.
+        </p>
+      </div>
+      <div class="model-stat">
+        <div class="model-stat-num">1%</div>
+        <div class="model-stat-label">of YOY Gross<br>Increase Only</div>
+      </div>
+    </div>
+
+    <!-- WHY TORQUE -->
+    <div class="why-col">
+      <div class="section-label">Why Torque</div>
+      <ul class="why-list">
+        <li>Operator background — we've worked inside dealerships, not just around them</li>
+        <li>Full-stack capability: operations, tech, finance, training, and compliance under one engagement</li>
+        <li>AI-forward — the only consultancy actively deploying agentic automation in dealer workflows</li>
+        <li>LHPH expertise from program structure through captive reinsurance design</li>
+        <li>Performance model aligns our incentive with yours — completely</li>
+      </ul>
+    </div>
+
+    <!-- WHO WE SERVE -->
+    <div class="who-col">
+      <div class="section-label">Who We Serve</div>
+      <ul class="who-list">
+        <li>
+          <strong>Independent Used Car Dealers</strong>
+          Operational efficiency, cost control, and technology leverage
+        </li>
+        <li>
+          <strong>Franchise &amp; OEM Dealers</strong>
+          F&amp;I lift, DMS optimization, OEM compliance, and leadership development
+        </li>
+        <li>
+          <strong>BHPH &amp; Subprime Dealers</strong>
+          LHPH program design, compliance, and loss mitigation strategy
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>
+      <div class="footer-brand">Torque Dealer Advisors</div>
+      <div class="footer-cta">Let's talk about what your numbers could look like.</div>
+    </div>
+    <div class="footer-contact">
+      torquedealeradvisors.com<br>
+      <a href="mailto:chris@torquedealeradvisors.com">chris@torquedealeradvisors.com</a>
+    </div>
+  </footer>
+
+  <div class="accent-bar"></div>
+
+</div>
+<script>
+  document.querySelectorAll('.service-item').forEach(function(tile) {
+    tile.addEventListener('click', function() {
+      const isOpen = this.classList.contains('open');
+      // Close all
+      document.querySelectorAll('.service-item').forEach(function(t) {
+        t.classList.remove('open');
+        const tog = t.querySelector('.tile-toggle');
+        if (tog) tog.textContent = '+';
+      });
+      // Open clicked if it was closed
+      if (!isOpen) {
+        this.classList.add('open');
+        const tog = this.querySelector('.tile-toggle');
+        if (tog) tog.textContent = '×';
+      }
+    });
+  });
+</script>
+</body>
+</html>
