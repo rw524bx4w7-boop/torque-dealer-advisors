@@ -817,10 +817,13 @@
       btn.textContent = 'Sending…';
       status.className = 'form-status';
       status.textContent = '';
-      fetch('/api/contact', {
+      fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify(Object.fromEntries(new FormData(contactForm)))
+        body: JSON.stringify(Object.assign(
+          { access_key: 'babbaf8a-cd2b-4be4-b46d-8314cf63f4e2' },
+          Object.fromEntries(new FormData(contactForm))
+        ))
       }).then(function(res) {
         if (res.ok) {
           status.className = 'form-status success';
