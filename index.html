@@ -818,10 +818,10 @@
       btn.textContent = 'Sending…';
       status.className = 'form-status';
       status.textContent = '';
-      fetch('https://formspree.io/ronjefferson1776@gmail.com', {
+      fetch('/api/contact', {
         method: 'POST',
-        headers: { 'Accept': 'application/json' },
-        body: new FormData(contactForm)
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(Object.fromEntries(new FormData(contactForm)))
       }).then(function(res) {
         if (res.ok) {
           status.className = 'form-status success';
@@ -833,7 +833,7 @@
         }
       }).catch(function() {
         status.className = 'form-status error';
-        status.textContent = 'Something went wrong. Email us directly at ronjefferson1776@gmail.com';
+        status.textContent = 'Something went wrong. Email us directly at chris@torquedealeradvisors.com';
         btn.disabled = false;
         btn.textContent = 'Send Message';
       });
